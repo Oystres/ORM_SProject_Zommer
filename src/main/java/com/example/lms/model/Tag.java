@@ -1,0 +1,30 @@
+package com.example.lms.model;
+
+import jakarta.persistence.*;
+import java.util.*;
+
+@Entity
+@Table(name = "tags", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_tag_name", columnNames = {"name"})
+})
+public class Tag {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    @ManyToMany(mappedBy = "tags")
+    private Set<Course> courses = new HashSet<>();
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public Set<Course> getCourses() { return courses; }
+    public void setCourses(Set<Course> courses) { this.courses = courses; }
+}
+
+
